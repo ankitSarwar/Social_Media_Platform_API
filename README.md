@@ -120,7 +120,7 @@ http://localhost:8080/api/posts/create?username=abhi_sarwar&token={User token}
 - http://localhost:8080/api/posts/private?token={token}
 
 ## S3FileUploadController 
-- first select extension and after getting a link and select put option and select binary 
+- first select extension and after getting a link and select put option and select binary and select file type for example -jpg for photos
 - http://localhost:8080/generate-presigned-url?extension=jpg
   >## open link and verify in AWS account - https://s3.console.aws.amazon.com/s3/buckets/app.socialmedia.fileupload?region=ap-south-1&tab=objects
 
