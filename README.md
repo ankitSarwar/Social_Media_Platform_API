@@ -41,7 +41,7 @@ The Social Media Platform API project aims to create a robust and user-friendly 
 - Comment
 - PostLike
   
-##Endpoints
+## Endpoints
 ## User Controller
 >## Authentication and Authentication with email notification
 Implements a secure authentication system, including options for users to log in using a username and password.
