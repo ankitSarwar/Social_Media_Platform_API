@@ -61,9 +61,25 @@ public class ActivityFeedController {
 
 
     @GetMapping("/getNotification/{userId}")
-    public ResponseEntity<List<FeedItemResponseDTO>> getPersonalizedActivityFeed1(@PathVariable Long userId) {
-        List<FeedItemResponseDTO> activityFeed = activityFeedService.getPersonalActivityFeed1(userId);
-        return ResponseEntity.ok(activityFeed);
+    public ResponseEntity<List<FeedItemResponseDTO>> getPersonalizedActivityFeed1(
+            @PathVariable Long userId,
+            @RequestParam String token
+    ) {
+        String username = jwtService.extractUsername(token);
+        Optional<User> currentUserOptional = userService.findByUsername(username);
+
+        if (currentUserOptional.isPresent()) {
+            User currentUser = currentUserOptional.get();
+
+            if (currentUser.getId().equals(userId)) {
+                List<FeedItemResponseDTO> activityFeed = activityFeedService.getPersonalActivityFeed1(userId);
+                return ResponseEntity.ok(activityFeed);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
 

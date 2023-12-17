@@ -143,6 +143,9 @@ public class PostController {
         // Save the reposted post
         postService.save(repostPost);
 
+        // Update the user's repostedPosts collection
+        currentUser.getRepostedPosts().add(repostPost);
+
         // Save the changes
         userService.save(currentUser);
 
@@ -198,4 +201,9 @@ public class PostController {
     }
 
 
+    @GetMapping("/getCountOfSharesPostsById/{postId}")
+    public ResponseEntity<Long> getCountOfSharesPostsById(@PathVariable Long postId) {
+        long shareCount = postService.getShareCountByPostId(postId);
+        return ResponseEntity.ok(shareCount);
+    }
 }

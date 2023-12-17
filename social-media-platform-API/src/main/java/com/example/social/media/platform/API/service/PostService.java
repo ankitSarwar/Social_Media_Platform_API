@@ -98,5 +98,7 @@ public class PostService {
     }
 
 
-
+    public long getShareCountByPostId(Long postId) {
+        return postRepository.countSharesByPostId(postId);
+    }
 }

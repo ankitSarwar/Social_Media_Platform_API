@@ -2,6 +2,7 @@ package com.example.social.media.platform.API.controller;
 
 import com.example.social.media.platform.API.exception.UserNotFoundException;
 import com.example.social.media.platform.API.model.User;
+import com.example.social.media.platform.API.service.PostService;
 import com.example.social.media.platform.API.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,6 +20,15 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PostService postService;
+
+
+    @GetMapping("/getAll")
+    public List<User> getAllUser(){
+        return userService.getAllUser();
+    }
 
     @GetMapping("/{id}")  // only admin can get ALL user and Admin
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -54,6 +65,17 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting user.");
+        }
+    }
+
+
+    @DeleteMapping("/delete/post")
+    public ResponseEntity<String> deletePost(@RequestParam Long PostId) {
+        try {
+            postService.deletePostById(PostId);
+            return ResponseEntity.ok("Post deleted successfully.");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found.");
         }
     }
 

@@ -80,9 +80,6 @@ public class JwtService {
         return (username1.equals(username) && !isTokenExpired(token));
     }
 
-
-
-
-
+    
 
 }

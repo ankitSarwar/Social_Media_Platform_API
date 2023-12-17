@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -41,5 +42,10 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     private PrivacySetting privacySetting;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text, imageUrl, videoUrl, createdDate, location, privacySetting);
+    }
 
 }

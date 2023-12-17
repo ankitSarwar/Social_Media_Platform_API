@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -50,7 +51,14 @@ public class User {
     private UserProfile userProfile;
 
 
-    @ManyToMany
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_reposts",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "post_id"))
+//    private Set<Post> repostedPosts = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_reposts",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -65,5 +73,10 @@ public class User {
 
     public User(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, email, phoneNumber, verificationToken, roles, isBlueTicked);
     }
 }
